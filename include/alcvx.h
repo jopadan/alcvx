@@ -63,3 +63,21 @@ typedef  uintptr_t uptr;
 typedef   intptr_t iptr;
 typedef     size_t usz;
 typedef    ssize_t ssz;
+
+/* quake vector types */
+typedef float          vec_t;
+typedef vec_t          vec2_t[2];
+typedef vec_t          vec3_t[3];
+typedef vec_t          vec4_t[4];
+typedef vec_t          vec5_t[5];
+typedef vec_t          vec6_t[6];
+typedef vec_t          vec7_t[7];
+typedef vec_t          vec8_t[8];
+
+typedef VEC(float,2)  avec2_t;
+typedef VEC(float,3)  avec3_t;
+typedef VEC(float,4)  avec4_t;
+typedef VEC(float,5)  avec5_t;
+typedef VEC(float,6)  avec6_t;
+typedef VEC(float,7)  avec7_t;
+typedef VEC(float,8)  avec8_t;
