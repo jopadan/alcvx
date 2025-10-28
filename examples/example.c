@@ -2,12 +2,20 @@
 #include <stdio.h>
 #include <alcvx.h>
 
+/* unaligned 3 component vector */
+typedef      float vec3_t[3];
+/*   aligned 3 component vector using GCC/LLVM vector extensions if available */
+typedef VEC(float,3) avec3_t;
+
 int main(int argc, char** argv)
 {
-	float u[3] = {1,2,3};
-	VEC(float,3) a = TO_VEC(u,3);
-	a *= a;
-	printf("[%f %f %f %f] %zu/%zu\n", u[0], u[1], u[2], a[3], alignof(u), sizeof(u));
-	printf("[%f %f %f %f] %zu/%zu\n", a[0], a[1], a[2], a[3], alignof(a), sizeof(a));
-	exit(EXIT_SUCCESS);
+     vec3_t src = { 1,2,3 };
+    avec3_t dst = ALCVX(src,3);
+
+
+    dst *= dst;
+    printf("[%f %f %f %f] %2zu/%2zu\n", src[0], src[1], src[2], src[3], alignof(src), sizeof(src));
+    printf("[%f %f %f %f] %2zu/%2zu\n", dst[0], dst[1], dst[2], dst[3], alignof(dst), sizeof(dst));
+
+    exit(EXIT_SUCCESS);
 }
