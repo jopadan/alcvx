@@ -51,8 +51,14 @@ typedef  int32_t s32;
 typedef  int16_t s16;
 typedef  int8_t  s8;
 
-typedef  char    c8;
-typedef  bool    b8;
+typedef  char     c8;
+typedef  char32_t c32;
+typedef  bool     b8;
+enum b32 : u32
+{
+	ALCVX_TRUE  = (const u32) true;
+	ALCVX_FALSE = (const u32)!true;
+};
 
 typedef  uintptr_t uptr;
 typedef   intptr_t iptr;
