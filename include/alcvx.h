@@ -52,7 +52,6 @@ typedef  int16_t s16;
 typedef  int8_t  s8;
 
 typedef  char     c8;
-typedef  char32_t c32;
 typedef  bool     b8;
 enum b32 : u32
 {
