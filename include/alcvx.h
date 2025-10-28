@@ -28,6 +28,4 @@
 #warn "Using aligned arrays without operators instead."
 #endif
 
-#define TO_VEC(src,n) (*(VEC(typeof(src[0]),n)*)src)
-#define TO_POS(src,n) ( VEC(src,n) dst = TO_VEC(src,n); if(src[n-1] != 0) dst/=src[n-1]; dst; )
-#define TO_DIR(a,b) ( VEC(typeof(a[0]),countof(a)) dst = ; if(src[n-1] != 0) dst/=src[nx-1]; dst; )
+#define ALCVX(src,n) (*(VEC(typeof(src[0]),n)*)src)
