@@ -20,6 +20,7 @@ if( CMAKE_GENERATOR_PLATFORM STREQUAL "x64" OR CMAKE_GENERATOR_PLATFORM STREQUAL
 endif()
 
 add_compile_options(-march=native -O3)
+add_compile_options(-Wno-gnu-alignof-expression)
 add_compile_options(-D_FILE_OFFSET_BITS=64)
 add_compile_options(-fdata-sections)
 add_compile_options(-fpermissive)
