@@ -1,2 +1,2 @@
 # alcvx
-Aligned C Vector Extensions library
+Aligned C Vector Extension single-header math library
