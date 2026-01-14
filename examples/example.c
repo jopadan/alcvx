@@ -4,7 +4,8 @@
 
 int main(int argc, char** argv)
 {
-     vec3_t id[3] = {{1,2,3},{4,5,6},{0,0,1}};
+    vec4_t id[4] = {{1,2,3,4},{4,5,6,7},{0,0,1,8}};
+    vec(double,3) idd[3] = {{1,2,3},{4,5,6},{0,0,1}};
     avec3_t a = ALCVX(id[0],3);
     avec3_t b = ALCVX(id[1],3);
     avec3_t c = cross3(a,b);
@@ -20,5 +21,9 @@ int main(int argc, char** argv)
     printf("[%hu %hu %hu %hu] %2zu/%2zu\n", tmp[0], tmp[1], tmp[2], tmp[3], alignof(tmp), sizeof(tmp));
     vec(u16,2) dst = (vec(u16,2))perm(tmp,1,0);
     printf("[%hu %hu]\n", dst[0], dst[1]);
+
+    vec4_t we[3];
+    printf("%f %f\n", we[0][0], we[0][1], we[1][0], we[1][1]);
+
     exit(EXIT_SUCCESS);
 }

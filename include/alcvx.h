@@ -5,6 +5,7 @@
 #include <stdalign.h>
 #include <sys/param.h>
 #include <stdarg.h>
+#include <string.h>
 
 #define PARENS ()
 #define EXPAND(...) EXPAND4(EXPAND4(EXPAND4(EXPAND4(__VA_ARGS__))))
@@ -15,7 +16,7 @@
 
 #undef countof
 #define countof(x) sizeof(typeof((x)))/sizeof(typeof((x)[0])) 
-#define cnt(x) countof(x)
+#define cnt(...) sizeof((typeof(__VA_ARGS__)[]){__VA_ARGS__})/sizeof(__VA_ARGS__)
 
 #define BITOP_RUP01__(x) (             (x) | (             (x) >>  1))
 #define BITOP_RUP02__(x) (BITOP_RUP01__(x) | (BITOP_RUP01__(x) >>  2))
@@ -59,30 +60,24 @@ for(size_t j = 0; j < MIN(MIN(cnt(a),cnt(b)),n); j++) \
 dst; \
 })
 
-#define numargs(...) sizeof((int[]){__VA_ARGS__})/sizeof(int)
-#define perm_first(a,i,...) (a)[i]
-
-#define minor(x,y,t,n,...) \
-({ \
-vec(t,n) a[] = (vec(t,n)[]){__VA_ARGS__}; \
-vec(t,n-1) dst[n-1]; \
-for(size_t i = 0; i < n-1; i++) \
-	for(size_t j = 0; j < n-1; j++) \
-		dst[i][j] = (i <  x && j <  y) ? a[i  ][j  ] : \
-		            (i >= x && j <  y) ? a[i+1][j  ] : \
-		            (i <  x && j >= y) ? a[i  ][j+1] : \
-		                                 a[i+1][j+1] ; \
-dst; \
-})
+#define minor(x,y,...) ({ \
+vec(typeof(__VA_ARGS__), cnt(__VA_ARGS__)-1) dst[cnt(__VA_ARGS__)-1]; \
+for(size_t i = 0; i < cnt(__VA_ARGS__)-1; i++) \
+	for(size_t j = 0; j < cnt(__VA_ARGS__)-1; j++) \
+		dst[i][j] = (i <  x && j <  y) ? (vec(typeof(__VA_ARGS__),cnt(__VA_ARGS__))[cnt(__VA_ARGS__)]){__VA_ARGS__}[i  ][j  ] : \
+ 	                    (i >= x && j <  y) ? (vec(typeof(__VA_ARGS__),cnt(__VA_ARGS__))[cnt(__VA_ARGS__)]){__VA_ARGS__}[i+1][j  ] : \
+	                    (i <  x && j >= y) ? (vec(typeof(__VA_ARGS__),cnt(__VA_ARGS__))[cnt(__VA_ARGS__)]){__VA_ARGS__}[i  ][j+1] : \
+		                                 (vec(typeof(__VA_ARGS__),cnt(__VA_ARGS__))[cnt(__VA_ARGS__)]){__VA_ARGS__}[i+1][j+1]; \
+dst; })
 
 #define sum3(a) sum(a,3,0)
 #define sum4(a) sum(a,4,0)
 #define dot3(a,b) dot(a,b,3,0)
 #define dot4(a,b) dot(a,b,4,0)
+
 #define perm(a,...) { __VA_OPT__(EXPAND(perm_helper(a,__VA_ARGS__))) }
 #define perm_helper(a,i,...) (a)[i], __VA_OPT__(perm_again PARENS (a,__VA_ARGS__))
 #define perm_again() perm_helper
-
 #define perm3(a,...) (vec(typeof((a)[0]),3))perm(a,__VA_ARGS__)
 #define perm4(a,...) (vec(typeof((a)[0]),4))perm(a,__VA_ARGS__)
 
@@ -131,7 +126,10 @@ typedef     size_t usz;
 typedef    ssize_t ssz;
 
 /* quake vector types */
-typedef float          vec_t;
+typedef float          vecf_t;
+typedef double         vecd_t;
+typedef vecf_t         vec_t;
+
 typedef vec_t          vec2_t[2];
 typedef vec_t          vec3_t[3];
 typedef vec_t          vec4_t[4];
@@ -164,3 +162,18 @@ typedef vec(float,14) avec14_t;
 typedef vec(float,15) avec15_t;
 typedef vec(float,16) avec16_t;
 
+typedef vecd_t          vec2d_t[2];
+typedef vecd_t          vec3d_t[3];
+typedef vecd_t          vec4d_t[4];
+typedef vecd_t          vec5d_t[5];
+typedef vecd_t          vec6d_t[6];
+typedef vecd_t          vec7d_t[7];
+typedef vecd_t          vec8d_t[8];
+typedef vecd_t          vec9d_t[9];
+typedef vecd_t          vec10d_t[10];
+typedef vecd_t          vec11d_t[11];
+typedef vecd_t          vec12d_t[12];
+typedef vecd_t          vec13d_t[13];
+typedef vecd_t          vec14d_t[14];
+typedef vecd_t          vec15d_t[15];
+typedef vecd_t          vec16d_t[16];
